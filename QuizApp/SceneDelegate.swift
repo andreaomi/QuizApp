@@ -21,10 +21,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene : windowScene)
         self.window = window
-         
-        let controller = ViewController()
-        self.window?.rootViewController = controller
-        self.window?.makeKeyAndVisible()
+        self.window?.rootViewController = checkToken()
+        self.window?.makeKeyAndVisible()  
+    }
+    
+    func checkToken() -> UINavigationController {
+        if UserDefaults.standard.value(forKey: "accessToken") == nil{
+            let controller = LoginViewController()
+            let navigationController = UINavigationController(rootViewController: controller)
+            return navigationController
+        } else {
+            let controller = QuizListController()
+            let navigationController = UINavigationController(rootViewController: controller)
+            return navigationController
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

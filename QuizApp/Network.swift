@@ -14,7 +14,7 @@ class Network {
     private let session = URLSession.shared
     private let jsonDecoder = JSONDecoder()
     
-    func getQuizzes(completionHandler: @escaping (ResponseModel?) -> Void){
+    func getQuizzes(completionHandler: @escaping (ResponseModel?) -> Void) -> Void{
         guard let url = URL(string: apiString) else {return}
         let task = session.dataTask(with: url) { (data, _, error) in
             if error != nil {
@@ -43,23 +43,3 @@ class Network {
 }
 
 
-struct QuizModel: Codable {
-    let id: Int
-    let title: String
-    let description: String
-    let category: String
-    let level: Int
-    let image: String
-    let questions: [QuestionModel]
-}
-
-struct QuestionModel: Codable {
-    let id: Int
-    let question: String
-    let answers: [String]
-    let correct_answer: Int
-}
-
-struct ResponseModel: Codable {
-    let quizzes: [QuizModel]
-}

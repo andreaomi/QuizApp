@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     var quizNameLabel: UILabel!
     
-    var quizImageView = UIImageView()
+    var quizImageView : UIImageView!
     
     var questionView: QuestionView!
     
@@ -30,11 +30,8 @@ class ViewController: UIViewController {
     
     var errorLabel : UILabel!
     
-    enum Category:String{
-        case SPORTS
-        case SCIENCE
-    }
-
+    var logoutButton : UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -42,6 +39,14 @@ class ViewController: UIViewController {
         createConstrains()
         view.backgroundColor = .white
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+          navigationController?.isNavigationBarHidden  = true
+      }
+      
+    override func viewWillDisappear(_ animated: Bool) {
+          navigationController?.isNavigationBarHidden = false
+      }
     
     func buildViews(){
         getQizzesButton = UIButton()
@@ -67,7 +72,7 @@ class ViewController: UIViewController {
         
         quizNameLabel = UILabel()
         quizNameLabel.text = "Ime"
-        quizNameLabel.textAlignment = .center
+        //quizNameLabel.textAlignment = .center
         quizNameLabel.numberOfLines = 0
         quizNameLabel.isHidden = true
         view.addSubview(quizNameLabel)
@@ -82,13 +87,23 @@ class ViewController: UIViewController {
         view.addSubview(questionView)
         
         errorLabel = UILabel()
+        errorLabel.textColor = .red
         errorLabel.isHidden = true
         view.addSubview(errorLabel)
         
+        logoutButton = UIButton()
+        logoutButton.setTitle("Log out", for: .normal)
+        logoutButton.setTitleColor(.black, for: .normal)
+        logoutButton.addTarget(self, action: #selector(logoutButtonTapped(_:)), for: .touchUpInside)
+        view.addSubview(logoutButton)
     }
     
     func createConstrains(){
-        getQizzesButton.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
+        logoutButton.autoPinEdge(toSuperviewEdge: .top, withInset:20)
+        logoutButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        
+        //getQizzesButton.autoPinEdge(toSuperviewEdge: .top, withInset: 70)
+        getQizzesButton.autoPinEdge(.top, to: .bottom, of: logoutButton, withOffset: 10)
         getQizzesButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
         getQizzesButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 50)
         
@@ -117,7 +132,16 @@ class ViewController: UIViewController {
 
     @objc func getQuizzes(){
         networkServices.getQuizzes(completionHandler: saveQuizzes(responseModel:))
-        
+        //.navigationController?.pushViewController(LoginViewController(), animated: true)
+    }
+    
+    @objc func logoutButtonTapped(_ sender: Any){
+        DispatchQueue.main.async {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "accessToken")
+        defaults.removeObject(forKey: "Id")
+        self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func checkCategory(category: Category) {
@@ -128,7 +152,7 @@ class ViewController: UIViewController {
         case .SCIENCE:
                 quizNameLabel.backgroundColor = .green
                 quizImageView.backgroundColor = .green
-        }
+        } 
     }
 
     func saveQuizzes(responseModel: ResponseModel?){
@@ -138,7 +162,7 @@ class ViewController: UIViewController {
                 let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
                 error.addAction(ok)
                 present(error, animated: true, completion: nil)
-                //errorLabel.text = "POGREŠKA"
+                //errorLabel.text = "POGREŠKA!!"
                 //errorLabel.isHidden = false
             }
         return
@@ -147,8 +171,7 @@ class ViewController: UIViewController {
         quizzes = responseModel.quizzes
         let num = responseModel.quizzes
             .map({$0.questions})
-            .map({$0.map({$0.question})})
-            .flatMap({$0})
+            .flatMap({$0.map({$0.question})})
             .filter({return $0.contains("NBA")})
             .count
         
@@ -159,14 +182,13 @@ class ViewController: UIViewController {
             quizNameLabel.isHidden = false
             quizImageView.isHidden = false
             questionView.isHidden = false
+            
             funFactNumberLabel.text = String(num)
             
-            let quiz = responseModel.quizzes[1]
-
+            let quiz = responseModel.quizzes[2]
             quizNameLabel.text =  quiz.title
             
             guard let category = Category(rawValue: quiz.category) else {return}
-            
             checkCategory(category: category)
                 
             guard let imageURL = URL(string: quiz.image) else {return}

@@ -110,7 +110,6 @@ class QuestionView: UIView {
         }
     }
     
-    
     func makeConstraints(){
         questionLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         questionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
