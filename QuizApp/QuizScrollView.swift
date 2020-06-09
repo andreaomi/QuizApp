@@ -21,6 +21,7 @@ class QuizScrollView: UIScrollView{
     override init(frame: CGRect) {
         super.init(frame:frame)
         scrollView.backgroundColor = .red
+        setUpQuestionView(quizModel: quizModel)
         //self.delegate = self
         //buildView()
         //makeConstraints()
@@ -53,13 +54,17 @@ class QuizScrollView: UIScrollView{
             }
         
         scrollView.addSubview(questionsStackView)
+        addSubview(scrollView)
         scrollView.autoMatch(.width, to: .width, of: self)
-        questionsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        /*questionsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         questionsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        
-        addSubview(scrollView)
+        scrollView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        */
         
     }
   

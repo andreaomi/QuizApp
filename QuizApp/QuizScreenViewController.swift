@@ -16,10 +16,17 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
     
     var startButton : UIButton!
     
-    var quizScrollView : QuizScrollView!
+    var quizScrollView : UIScrollView!
     
     var quiz : QuizModel?
     
+    var contentWidth : CGFloat = 0.0
+    
+    var questionView: QuestionView!
+    
+    var pageControl : UIPageControl!
+    
+    var questionsStackView : UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,10 +68,33 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
         startButton.addTarget(self, action: #selector(startButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(startButton)
         
-        quizScrollView = QuizScrollView()
+        questionsStackView = UIStackView()
+        questionsStackView.axis = .horizontal
+        //questionsStackView.distribution = .fillEqually
+        //questionsStackView.translatesAutoresizingMaskIntoConstraints = false
+        quizScrollView = UIScrollView()
+        quizScrollView.isHidden = true
+        quizScrollView.addSubview(questionsStackView)
         view.addSubview(quizScrollView)
-    
-        /*quizScrollView = UIScrollView()
+        
+        guard let numberOfQuestions = self.quiz?.questions.count else {return}
+        
+        for i in 0..<numberOfQuestions{
+            questionView = QuestionView()
+            questionView.setQuestion(questionModel: (quiz?.questions[i])!)
+            questionsStackView.addArrangedSubview(questionView)
+            questionView.autoMatch(.width, to: .width, of: view)
+            print("tu")
+        }
+        
+        
+        
+        
+        //quizScrollView = QuizScrollView()
+        //view.addSubview(quizScrollView)
+        /*
+        quizScrollView = UIScrollView()
+        quizScrollView.delegate = self
         quizScrollView.backgroundColor = .green
         guard let numberOfQuestions = self.quiz?.questions.count else {return}
         for i in 0..<numberOfQuestions{
@@ -72,23 +102,23 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
             quizScrollView.addSubview(questionView)
             let xCordinate = view.frame.minX + view.frame.size.width * CGFloat(i)
             contentWidth += view.frame.size.width
-            questionView.frame = CGRect(x: xCordinate, y: view.frame.minY, width: view.frame.size.width, height:quizScrollView.frame.size.height )
-            //print(quizScrollView.frame.size.height)
+            questionView.frame = CGRect(x: xCordinate, y: view.frame.minY, width: view.frame.size.width, height:view.frame.size.height)
             questionView.setQuestion(questionModel: (quiz?.questions[i])!)
                 
             }
+        
  
         quizScrollView.isHidden = true
         quizScrollView.contentSize = CGSize(width : contentWidth, height : view.frame.size.height)
         view.addSubview(quizScrollView)
- */
+        */
  
-
     
     }
     
     @objc func startButtonTapped(_ sender : UIButton){
         quizScrollView.isHidden = false
+        //quizScrollView.delegate = self
         //quizScrollView.delegate = self
         
     }
@@ -106,12 +136,19 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
         startButton.autoPinEdge(.top, to: .bottom, of: imageQuiz, withOffset: 20)
         startButton.autoAlignAxis(.vertical, toSameAxisOf: imageQuiz)
         
+        questionsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: 0)
+        questionsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
+        questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
+        questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
+        
         quizScrollView.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 2)
         quizScrollView.autoAlignAxis(.vertical, toSameAxisOf: startButton)
         quizScrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         quizScrollView.autoMatch(.width, to: .width, of: view)
 
     }
+    
+    
     
      
 
