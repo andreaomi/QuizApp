@@ -39,11 +39,6 @@ class QuizScreenViewController: UIViewController{
         createConstrains()
     }
     
-    convenience init(quizModel : QuizModel){
-        self.init()
-        self.quiz = quizModel
-    }
-    
        
     func getImage() -> URL?{
         guard let imageURL = quiz?.image else {return nil}

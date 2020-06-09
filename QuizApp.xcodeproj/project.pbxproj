@@ -22,7 +22,6 @@
 		65A69E242489139A004A6191 /* QuizTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69E232489139A004A6191 /* QuizTableViewCell.swift */; };
 		65A69E2724897F10004A6191 /* QuizTableFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69E2624897F10004A6191 /* QuizTableFooter.swift */; };
 		65D9E8BC248D241A00C6D614 /* QuizScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D9E8BB248D241A00C6D614 /* QuizScreenViewController.swift */; };
-		65D9E8BE248D713C00C6D614 /* QuizScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D9E8BD248D713C00C6D614 /* QuizScrollView.swift */; };
 		78242B4161CE256D7347F357 /* Pods_QuizApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26057B99C6EA919F1E21BA09 /* Pods_QuizApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +45,6 @@
 		65A69E232489139A004A6191 /* QuizTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableViewCell.swift; sourceTree = "<group>"; };
 		65A69E2624897F10004A6191 /* QuizTableFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableFooter.swift; sourceTree = "<group>"; };
 		65D9E8BB248D241A00C6D614 /* QuizScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizScreenViewController.swift; sourceTree = "<group>"; };
-		65D9E8BD248D713C00C6D614 /* QuizScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizScrollView.swift; sourceTree = "<group>"; };
 		95A9058A2D4F3CA7FA7249B4 /* Pods-QuizApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizApp.release.xcconfig"; path = "Target Support Files/Pods-QuizApp/Pods-QuizApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,7 +101,6 @@
 				65855B2C2467477D0042590C /* LaunchScreen.storyboard */,
 				65855B2F2467477D0042590C /* Info.plist */,
 				655714B124851A6B007AC8A0 /* LoginViewController.swift */,
-				65D9E8BD248D713C00C6D614 /* QuizScrollView.swift */,
 				655714B3248571BC007AC8A0 /* QuizListController.swift */,
 				65D9E8BB248D241A00C6D614 /* QuizScreenViewController.swift */,
 				65A69E232489139A004A6191 /* QuizTableViewCell.swift */,
@@ -253,7 +250,6 @@
 			files = (
 				655714B4248571BC007AC8A0 /* QuizListController.swift in Sources */,
 				65855B39246764D90042590C /* Network.swift in Sources */,
-				65D9E8BE248D713C00C6D614 /* QuizScrollView.swift in Sources */,
 				65D9E8BC248D241A00C6D614 /* QuizScreenViewController.swift in Sources */,
 				65855B3724675E990042590C /* QuestionView.swift in Sources */,
 				65855B26246747790042590C /* ViewController.swift in Sources */,
