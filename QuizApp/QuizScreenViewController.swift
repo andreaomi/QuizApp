@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
+class QuizScreenViewController: UIViewController{
     
     var quizTitleLabel : UILabel!
     
@@ -22,7 +22,11 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
     
     var contentWidth : CGFloat = 0.0
     
-    var questionView: QuestionView!
+    var questionViews: [QuestionView]! = []
+    
+    var questionsAnswered : Int = 0
+    
+    //var questionView : QuestionView!
     
     var pageControl : UIPageControl!
     
@@ -70,58 +74,29 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
         
         questionsStackView = UIStackView()
         questionsStackView.axis = .horizontal
-        //questionsStackView.distribution = .fillEqually
-        //questionsStackView.translatesAutoresizingMaskIntoConstraints = false
+        
         quizScrollView = UIScrollView()
         quizScrollView.isHidden = true
         quizScrollView.addSubview(questionsStackView)
         view.addSubview(quizScrollView)
         
+        createQuestionViews()
+    }
+    
+    
+    func createQuestionViews(){
         guard let numberOfQuestions = self.quiz?.questions.count else {return}
         
         for i in 0..<numberOfQuestions{
-            questionView = QuestionView()
-            questionView.setQuestion(questionModel: (quiz?.questions[i])!)
-            questionsStackView.addArrangedSubview(questionView)
-            questionView.autoMatch(.width, to: .width, of: view)
-            print("tu")
+            questionViews.append(QuestionView())
+            questionViews[i].setQuestion(questionModel: (quiz?.questions[i])!)
+            questionViews[i].delegate = self
+            questionsStackView.addArrangedSubview(questionViews[i])
+            questionViews[i].autoMatch(.width, to: .width, of: view)
         }
         
-        
-        
-        
-        //quizScrollView = QuizScrollView()
-        //view.addSubview(quizScrollView)
-        /*
-        quizScrollView = UIScrollView()
-        quizScrollView.delegate = self
-        quizScrollView.backgroundColor = .green
-        guard let numberOfQuestions = self.quiz?.questions.count else {return}
-        for i in 0..<numberOfQuestions{
-            questionView = QuestionView()
-            quizScrollView.addSubview(questionView)
-            let xCordinate = view.frame.minX + view.frame.size.width * CGFloat(i)
-            contentWidth += view.frame.size.width
-            questionView.frame = CGRect(x: xCordinate, y: view.frame.minY, width: view.frame.size.width, height:view.frame.size.height)
-            questionView.setQuestion(questionModel: (quiz?.questions[i])!)
-                
-            }
-        
- 
-        quizScrollView.isHidden = true
-        quizScrollView.contentSize = CGSize(width : contentWidth, height : view.frame.size.height)
-        view.addSubview(quizScrollView)
-        */
- 
-    
     }
-    
-    @objc func startButtonTapped(_ sender : UIButton){
-        quizScrollView.isHidden = false
-        //quizScrollView.delegate = self
-        //quizScrollView.delegate = self
-        
-    }
+
     
     func createConstrains(){
         quizTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 80)
@@ -149,9 +124,34 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
     }
     
     
+    @objc func startButtonTapped(_ sender : UIButton){
+           quizScrollView.isHidden = false
+           let questionView = QuestionView()
+           questionView.delegate = self
+           //quizScrollView.delegate = self
+           
+       }
     
-     
+    func scrollToAnotherQuestion() {
+        let deltax = view.frame.size.width * CGFloat(questionsAnswered)
+        quizScrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)
+    }
 
+
+}
+
+extension QuizScreenViewController: QuestionViewDelegate {
+    func clickedAnswer() {
+        questionViews[questionsAnswered].isUserInteractionEnabled = false
+        questionsAnswered += 1
+       
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.scrollToAnotherQuestion()
+        }
+        
+    }
+    
+    
 }
     
     

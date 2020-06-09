@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol QuestionViewDelegate: class {
+       func clickedAnswer()
+   }
+
 class QuestionView: UIView {
     
     var questionLabel : UILabel!
@@ -20,6 +24,9 @@ class QuestionView: UIView {
     var answersStackView : UIStackView!
     
     var questionModel: QuestionModel?
+    
+    weak var delegate: QuestionViewDelegate?
+    
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -108,6 +115,7 @@ class QuestionView: UIView {
         } else {
             sender.backgroundColor = .red
         }
+        delegate?.clickedAnswer()
     }
     
     func makeConstraints(){
