@@ -16,9 +16,11 @@ class QuizScrollView: UIScrollView{
     
     var questionsStackView = UIStackView()
     
+    var scrollView = UIScrollView()
+    
     override init(frame: CGRect) {
         super.init(frame:frame)
-        backgroundColor = .red
+        scrollView.backgroundColor = .red
         //self.delegate = self
         //buildView()
         //makeConstraints()
@@ -50,11 +52,14 @@ class QuizScrollView: UIScrollView{
             print("tu")
             }
         
-        addSubview(questionsStackView)
+        scrollView.addSubview(questionsStackView)
+        scrollView.autoMatch(.width, to: .width, of: self)
         questionsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         questionsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        
+        addSubview(scrollView)
         
     }
   

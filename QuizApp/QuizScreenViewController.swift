@@ -89,7 +89,7 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
     
     @objc func startButtonTapped(_ sender : UIButton){
         quizScrollView.isHidden = false
-        quizScrollView.delegate = self
+        //quizScrollView.delegate = self
         
     }
     
@@ -112,8 +112,6 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
         quizScrollView.autoMatch(.width, to: .width, of: view)
 
     }
-    
-    
     
      
 
