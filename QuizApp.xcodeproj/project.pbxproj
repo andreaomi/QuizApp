@@ -68,6 +68,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		655A468324900A89004625EF /* QuizTableViews */ = {
+			isa = PBXGroup;
+			children = (
+				65A69E2624897F10004A6191 /* QuizTableFooter.swift */,
+				65A69E232489139A004A6191 /* QuizTableViewCell.swift */,
+				65A69E2124890DED004A6191 /* QuizTableSectionHeader.swift */,
+			);
+			path = QuizTableViews;
+			sourceTree = "<group>";
+		};
+		655A468424900AB5004625EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				655CDE542474A8390002B34F /* Structure.swift */,
+				655CDE522474A7460002B34F /* Category.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		655A468524900ACB004625EF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				655714B3248571BC007AC8A0 /* QuizListController.swift */,
+				65D9E8BB248D241A00C6D614 /* QuizScreenViewController.swift */,
+				65855B25246747790042590C /* ViewController.swift */,
+				655714B124851A6B007AC8A0 /* LoginViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		65855B15246747790042590C = {
 			isa = PBXGroup;
 			children = (
@@ -89,21 +119,16 @@
 		65855B20246747790042590C /* QuizApp */ = {
 			isa = PBXGroup;
 			children = (
-				65A69E2524897EBB004A6191 /* Views */,
+				655A468524900ACB004625EF /* Controllers */,
+				655A468424900AB5004625EF /* Models */,
+				655A468324900A89004625EF /* QuizTableViews */,
 				65855B3524675E5C0042590C /* CustomViews */,
 				65855B21246747790042590C /* AppDelegate.swift */,
-				655CDE542474A8390002B34F /* Structure.swift */,
 				65855B38246764D90042590C /* Network.swift */,
-				655CDE522474A7460002B34F /* Category.swift */,
 				65855B23246747790042590C /* SceneDelegate.swift */,
-				65855B25246747790042590C /* ViewController.swift */,
 				65855B2A2467477D0042590C /* Assets.xcassets */,
 				65855B2C2467477D0042590C /* LaunchScreen.storyboard */,
 				65855B2F2467477D0042590C /* Info.plist */,
-				655714B124851A6B007AC8A0 /* LoginViewController.swift */,
-				655714B3248571BC007AC8A0 /* QuizListController.swift */,
-				65D9E8BB248D241A00C6D614 /* QuizScreenViewController.swift */,
-				65A69E232489139A004A6191 /* QuizTableViewCell.swift */,
 			);
 			path = QuizApp;
 			sourceTree = "<group>";
@@ -114,15 +139,6 @@
 				65855B3624675E990042590C /* QuestionView.swift */,
 			);
 			path = CustomViews;
-			sourceTree = "<group>";
-		};
-		65A69E2524897EBB004A6191 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				65A69E2124890DED004A6191 /* QuizTableSectionHeader.swift */,
-				65A69E2624897F10004A6191 /* QuizTableFooter.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		7F63F97F2B3394BFF631D575 /* Pods */ = {

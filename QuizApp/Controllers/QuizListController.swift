@@ -107,14 +107,6 @@ class QuizListController: UIViewController {
         return quizzes
     }
     
-    @objc func logoutButtonTapped(_ sender: Any){
-        DispatchQueue.main.async {
-        UserDefaults.standard.removeObject(forKey: "True")
-        self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
-
 }
 
 extension QuizListController: UITableViewDelegate, UITableViewDataSource{
@@ -152,8 +144,8 @@ extension QuizListController: UITableViewDelegate, UITableViewDataSource{
         tableView.deselectRow(at: indexPath, animated: true)
         let quiz = getQuiz()[indexPath.section][indexPath.row]
         
-        let quizScreenViewController = QuizScreenViewController(quizModel: quiz)
-        //quizScreenViewController.quiz = quiz
+        let quizScreenViewController = QuizScreenViewController()
+        quizScreenViewController.quiz = quiz
 
         navigationController?.pushViewController(quizScreenViewController, animated: true)
         }
@@ -162,16 +154,10 @@ extension QuizListController: UITableViewDelegate, UITableViewDataSource{
 
 extension QuizListController: TableViewFooterViewDelegate {
     func logoutButton() {
-        //DispatchQueue.main.async {
         let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "accessToken")
         defaults.removeObject(forKey: "Id")
-        //let vc = LoginViewController()
-        //self.navigationController?.pushViewController(vc, animated: true)
-        //self.navigationController?.popToRootViewController(animated: true)
-        //self.navigationController?.popViewController(animated: true)
-        //}
-
+        self.navigationController?.popViewController(animated:true)
     }
 }
 

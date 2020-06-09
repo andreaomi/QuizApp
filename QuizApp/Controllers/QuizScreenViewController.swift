@@ -123,7 +123,6 @@ class QuizScreenViewController: UIViewController{
            quizScrollView.isHidden = false
            let questionView = QuestionView()
            questionView.delegate = self
-           //quizScrollView.delegate = self
            
        }
     

@@ -27,11 +27,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func checkToken() -> UINavigationController {
         if UserDefaults.standard.value(forKey: "accessToken") == nil{
-            let controller = LoginViewController()
-            let navigationController = UINavigationController(rootViewController: controller)
+            let controller = QuizListController()
+            let loginController = LoginViewController()
+            let navigationController = UINavigationController(rootViewController: loginController)
+            navigationController.pushViewController(controller, animated: true)
             return navigationController
         } else {
-            let controller = QuizListController()
+            let controller = LoginViewController()
             let navigationController = UINavigationController(rootViewController: controller)
             return navigationController
         }
