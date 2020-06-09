@@ -16,15 +16,10 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
     
     var startButton : UIButton!
     
-    var quizScrollView : UIScrollView!
+    var quizScrollView : QuizScrollView!
     
     var quiz : QuizModel?
     
-    var pageControl : UIPageControl!
-    
-    var contentWidth: CGFloat = 0.0
-    
-    var questionView : QuestionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,22 +61,28 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
         startButton.addTarget(self, action: #selector(startButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(startButton)
         
-
         quizScrollView = QuizScrollView()
+        view.addSubview(quizScrollView)
+    
+        /*quizScrollView = UIScrollView()
+        quizScrollView.backgroundColor = .green
         guard let numberOfQuestions = self.quiz?.questions.count else {return}
         for i in 0..<numberOfQuestions{
             questionView = QuestionView()
             quizScrollView.addSubview(questionView)
             let xCordinate = view.frame.minX + view.frame.size.width * CGFloat(i)
             contentWidth += view.frame.size.width
-            questionView.frame = CGRect(x: xCordinate, y: view.frame.minY, width: view.frame.size.width, height:view.frame.size.height )
+            questionView.frame = CGRect(x: xCordinate, y: view.frame.minY, width: view.frame.size.width, height:quizScrollView.frame.size.height )
             //print(quizScrollView.frame.size.height)
             questionView.setQuestion(questionModel: (quiz?.questions[i])!)
                 
             }
+ 
         quizScrollView.isHidden = true
         quizScrollView.contentSize = CGSize(width : contentWidth, height : view.frame.size.height)
         view.addSubview(quizScrollView)
+ */
+ 
 
     
     }
@@ -106,21 +107,12 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
         startButton.autoAlignAxis(.vertical, toSameAxisOf: imageQuiz)
         
         quizScrollView.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 2)
-        
         quizScrollView.autoAlignAxis(.vertical, toSameAxisOf: startButton)
         quizScrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         quizScrollView.autoMatch(.width, to: .width, of: view)
 
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        pageControl.currentPage = Int(quizScrollView.contentOffset.x/CGFloat(view.frame.size.width))
-    }
     
     
      
