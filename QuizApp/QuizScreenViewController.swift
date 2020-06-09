@@ -16,20 +16,21 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
     
     var startButton : UIButton!
     
-    var quizScrollView : QuizScrollView!
+    var quizScrollView : UIScrollView!
     
     var quiz : QuizModel?
     
     var pageControl : UIPageControl!
     
+    var contentWidth: CGFloat = 0.0
+    
+    var questionView : QuestionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        //quizScrollView.delegate = self
         buildViews()
         createConstrains()
-        //getQuiz()
     }
     
     convenience init(quizModel : QuizModel){
@@ -67,8 +68,19 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
         
 
         quizScrollView = QuizScrollView()
+        guard let numberOfQuestions = self.quiz?.questions.count else {return}
+        for i in 0..<numberOfQuestions{
+            questionView = QuestionView()
+            quizScrollView.addSubview(questionView)
+            let xCordinate = view.frame.minX + view.frame.size.width * CGFloat(i)
+            contentWidth += view.frame.size.width
+            questionView.frame = CGRect(x: xCordinate, y: view.frame.minY, width: view.frame.size.width, height:view.frame.size.height )
+            //print(quizScrollView.frame.size.height)
+            questionView.setQuestion(questionModel: (quiz?.questions[i])!)
+                
+            }
         quizScrollView.isHidden = true
-        quizScrollView.setUpQuestionView(quizModel: quiz)
+        quizScrollView.contentSize = CGSize(width : contentWidth, height : view.frame.size.height)
         view.addSubview(quizScrollView)
 
     
@@ -101,8 +113,13 @@ class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
 
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        pageControl.currentPage = Int(scrollView.contentOffset.x/view.frame.width)
+        
+        pageControl.currentPage = Int(quizScrollView.contentOffset.x/CGFloat(view.frame.size.width))
     }
     
     

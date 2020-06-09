@@ -32,6 +32,8 @@ class QuizScrollView: UIScrollView{
         //setUpQuestionView(quizModel: quizModel)
         //buildView()
         //makeConstraints()
+        self.autoMatch(.width, to: .width, of: self.superview!)
+        print(self.frame.size.width)
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -52,7 +54,7 @@ class QuizScrollView: UIScrollView{
             let xCordinate = self.frame.minX + self.frame.width * CGFloat(i)
             contentWidth += self.frame.width
     
-            print(self.frame.width)
+            print(self.frame.size.width)
             //questionView
             questionView.frame = CGRect(x: xCordinate, y: self.frame.minY, width: 100, height: 100)
             addSubview(questionView)
