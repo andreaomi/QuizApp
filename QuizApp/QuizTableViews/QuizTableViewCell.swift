@@ -38,16 +38,20 @@ class QuizTableViewCell: UITableViewCell {
     func buildViews(){
         quizImageView = UIImageView()
         quizImageView.backgroundColor = .red
+        quizImageView.layer.cornerRadius = 5
+        quizImageView.clipsToBounds = true
         addSubview(quizImageView)
         
         quizTitleLabel = UILabel()
-        quizTitleLabel.font.withSize(3)
         quizTitleLabel.numberOfLines = 1
+        quizTitleLabel.textAlignment = .left
+        quizTitleLabel.font = UIFont.boldSystemFont(ofSize: 15)
         addSubview(quizTitleLabel)
         
         quizDescriptionLabel = UILabel()
         quizDescriptionLabel.numberOfLines = 0
-        //quizDescriptionLabel.font.withSize(10)
+        quizDescriptionLabel.textAlignment = .left
+        quizDescriptionLabel.font = quizDescriptionLabel.font.withSize(13)
         addSubview(quizDescriptionLabel)
         
         imageStackView = UIStackView()
@@ -62,7 +66,6 @@ class QuizTableViewCell: UITableViewCell {
         imageStackView.addArrangedSubview(levelImage1)
         imageStackView.addArrangedSubview(levelImage2)
         imageStackView.addArrangedSubview(levelImage3)
-        
 
     }
     
@@ -74,20 +77,19 @@ class QuizTableViewCell: UITableViewCell {
         quizImageView.autoSetDimensions(to: CGSize(width: 100, height: 80))
         
         quizTitleLabel.autoPinEdge(.leading, to: .trailing, of: quizImageView, withOffset: 5)
-        quizTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        quizTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 15)
         levelImage1.autoSetDimensions(to: CGSize(width: 12, height: 12))
         levelImage2.autoSetDimensions(to: CGSize(width: 12, height: 12))
         levelImage3.autoSetDimensions(to: CGSize(width: 12, height: 12))
         
-        //imageStackView.autoPinEdge(.leading, to: .trailing, of: quizTitleLabel, withOffset: 2)
-        imageStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 8)
-    
+        imageStackView.autoPinEdge(.leading, to: .trailing, of: quizTitleLabel, withOffset: 2)
+        imageStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 5)
         imageStackView.autoAlignAxis(.horizontal, toSameAxisOf: quizTitleLabel)
         
         quizDescriptionLabel.autoPinEdge(.top, to: .bottom, of: quizTitleLabel, withOffset: 15)
         quizDescriptionLabel.autoPinEdge(.leading, to: .trailing, of: quizImageView, withOffset: 5)
         quizDescriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 5)
-        //quizDescriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        quizDescriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         
     }
     

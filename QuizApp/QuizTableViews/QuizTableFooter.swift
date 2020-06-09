@@ -27,7 +27,7 @@ class QuizTableFooter: UIView {
         super.init(frame: frame)
         buildViews()
         makeConstraints()
-        backgroundColor = UIColor.yellow
+        backgroundColor = UIColor.white
     }
     
     required init?(coder: NSCoder) {
@@ -36,9 +36,13 @@ class QuizTableFooter: UIView {
     
     func buildViews(){
         logoutButton = UIButton()
-        logoutButton.setTitle("Logout", for: .normal)
+        logoutButton.setTitle("LOGOUT", for: .normal)
         logoutButton.setTitleColor(.black, for: .normal)
         logoutButton.addTarget(self, action: #selector(QuizTableFooter.logoutButtonTapped(_:)), for: .touchUpInside)
+        //logoutButton.layer.cornerRadius = 4
+        //logoutButton.layer.borderWidth = 1
+        //logoutButton.layer.borderColor = UIColor.black.cgColor
+        //ogoutButton.backgroundColor = UIColor.lightGray
         self.addSubview(logoutButton)
     }
     

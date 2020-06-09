@@ -28,14 +28,19 @@ class QuizListController: UIViewController {
         super.viewDidLoad()
         setUpData()
         configureTableView()
-        // Do any additional setup after loading the view.
     }
     
     func configureTableView(){
         buildViews()
-        createConstrains()
         setTableViewDelegate()
-        //tableView.rowHeight = 100
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden  = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
     }
     
     func setTableViewDelegate(){
@@ -47,15 +52,11 @@ class QuizListController: UIViewController {
         tableView = UITableView()
         tableView.register(QuizTableViewCell.self, forCellReuseIdentifier: Cells.quizCell)
         view.addSubview(tableView)
-        
-        tableFooterView = QuizTableFooter(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 100))
-        tableFooterView.logoutDelegate = self
-        tableView.tableFooterView = tableFooterView
-    }
-    
-    func createConstrains(){
         tableView.autoPinEdgesToSuperviewEdges()
         
+        tableFooterView = QuizTableFooter(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
+        tableFooterView.logoutDelegate = self
+        tableView.tableFooterView = tableFooterView
     }
     
     func setUpData(){

@@ -51,11 +51,12 @@ class LoginViewController: UIViewController {
         passwordTextField = UITextField()
         passwordTextField.placeholder = "password"
         passwordTextField.layer.borderColor = UIColor.black.cgColor
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(passwordTextField)
         
         loginButton = UIButton()
-        loginButton.setTitle("Logiraj", for: .normal)
+        loginButton.setTitle("LOGIN", for: .normal)
         loginButton.setTitleColor(.black, for: .normal)
         loginButton.layer.cornerRadius = 5
         loginButton.layer.borderWidth = 1.5

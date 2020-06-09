@@ -26,11 +26,11 @@ class QuizScreenViewController: UIViewController{
     
     var questionsAnswered : Int = 0
     
-    //var questionView : QuestionView!
-    
-    var pageControl : UIPageControl!
+    var correctAnswers : Int = 0
     
     var questionsStackView : UIStackView!
+    
+    var timer : Date!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,16 +50,20 @@ class QuizScreenViewController: UIViewController{
         quizTitleLabel = UILabel()
         quizTitleLabel.text = quiz?.title
         quizTitleLabel.textColor = .black
+        quizTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         view.addSubview(quizTitleLabel)
         
         imageQuiz = UIImageView()
         imageQuiz.kf.setImage(with: getImage())
         imageQuiz.backgroundColor = .red
+        imageQuiz.layer.cornerRadius = 10
+        imageQuiz.clipsToBounds = true
         view.addSubview(imageQuiz)
         
         startButton = UIButton()
-        startButton.setTitle("Start quiz", for: .normal)
+        startButton.setTitle("START", for: .normal)
         startButton.setTitleColor(.black, for: .normal)
+        startButton.autoSetDimensions(to: .init(width: 150, height: 40))
         startButton.layer.cornerRadius = 5
         startButton.layer.borderWidth = 1.5
         startButton.layer.borderColor = UIColor.black.cgColor
@@ -89,18 +93,15 @@ class QuizScreenViewController: UIViewController{
             questionsStackView.addArrangedSubview(questionViews[i])
             questionViews[i].autoMatch(.width, to: .width, of: view)
         }
-        
     }
 
     
     func createConstrains(){
         quizTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 80)
-        //quizTitleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
-        //quizTitleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 50)
         quizTitleLabel.autoAlignAxis(.vertical, toSameAxisOf: view)
         
         imageQuiz.autoPinEdge(.top, to: .bottom, of: quizTitleLabel, withOffset: 20)
-        imageQuiz.autoSetDimensions(to: CGSize(width:150, height: 120))
+        imageQuiz.autoSetDimensions(to: CGSize(width:200, height: 150))
         imageQuiz.autoAlignAxis(.vertical, toSameAxisOf: quizTitleLabel)
         
         startButton.autoPinEdge(.top, to: .bottom, of: imageQuiz, withOffset: 20)
@@ -111,7 +112,7 @@ class QuizScreenViewController: UIViewController{
         questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
         questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
         
-        quizScrollView.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 2)
+        quizScrollView.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 40)
         quizScrollView.autoAlignAxis(.vertical, toSameAxisOf: startButton)
         quizScrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         quizScrollView.autoMatch(.width, to: .width, of: view)
@@ -120,17 +121,16 @@ class QuizScreenViewController: UIViewController{
     
     
     @objc func startButtonTapped(_ sender : UIButton){
-           quizScrollView.isHidden = false
-           let questionView = QuestionView()
-           questionView.delegate = self
-           
+        quizScrollView.isHidden = false
+        let questionView = QuestionView()
+        questionView.delegate = self
+        timer = Date()
        }
     
     func scrollToAnotherQuestion() {
-        let deltax = view.frame.size.width * CGFloat(questionsAnswered)
-        quizScrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)
+        let move = view.frame.size.width * CGFloat(questionsAnswered)
+        quizScrollView.setContentOffset(CGPoint(x: move, y: 0), animated: true)
     }
-
 
 }
 
@@ -138,9 +138,15 @@ extension QuizScreenViewController: QuestionViewDelegate {
     func clickedAnswer() {
         questionViews[questionsAnswered].isUserInteractionEnabled = false
         questionsAnswered += 1
-       
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            self.scrollToAnotherQuestion()
+        guard let numberOfQuestions = self.quiz?.questions.count else {return}
+        if(questionsAnswered < numberOfQuestions){
+            Timer.scheduledTimer(withTimeInterval: 1.3, repeats: true) { timer in
+                self.scrollToAnotherQuestion()
+            }
+        } else{
+            let duration = Double(Date().timeIntervalSince(timer))
+            print(duration)
+
         }
         
     }

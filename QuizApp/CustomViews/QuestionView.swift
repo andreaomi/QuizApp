@@ -25,16 +25,10 @@ class QuestionView: UIView {
     
     var questionModel: QuestionModel?
     
+    var score : Int = 0
+    
     weak var delegate: QuestionViewDelegate?
     
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
     override init(frame: CGRect) {
         super.init(frame:frame)
         buildViews()
@@ -54,6 +48,7 @@ class QuestionView: UIView {
         questionLabel.adjustsFontSizeToFitWidth = false;
         questionLabel.numberOfLines = 0
         questionLabel.textAlignment = .center
+        questionLabel.font = UIFont.boldSystemFont(ofSize: 18)
         addSubview(questionLabel)
         
         answersStackView = UIStackView()
@@ -68,7 +63,7 @@ class QuestionView: UIView {
         answer1Button.backgroundColor = UIColor.magenta
         answer1Button.tag = 1
         answer1Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
-        answer1Button.layer.cornerRadius = 20
+        answer1Button.layer.cornerRadius = 10
         answer1Button.layer.borderWidth = 1
         answer1Button.layer.borderColor = UIColor.black.cgColor
         answersStackView.addArrangedSubview(answer1Button)
@@ -79,7 +74,7 @@ class QuestionView: UIView {
         answer2Button.backgroundColor = UIColor.magenta
         answer2Button.tag = 2
         answer2Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
-        answer2Button.layer.cornerRadius = 20
+        answer2Button.layer.cornerRadius = 10
         answer2Button.layer.borderWidth = 1
         answer2Button.layer.borderColor = UIColor.black.cgColor
         answersStackView.addArrangedSubview(answer2Button)
@@ -90,7 +85,7 @@ class QuestionView: UIView {
         answer3Button.backgroundColor = UIColor.magenta
         answer3Button.tag = 3
         answer3Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
-        answer3Button.layer.cornerRadius = 20
+        answer3Button.layer.cornerRadius = 10
         answer3Button.layer.borderWidth = 1
         answer3Button.layer.borderColor = UIColor.black.cgColor
         answersStackView.addArrangedSubview(answer3Button)
@@ -101,7 +96,7 @@ class QuestionView: UIView {
         answer4Button.backgroundColor = UIColor.magenta
         answer4Button.tag = 4
         answer4Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
-        answer4Button.layer.cornerRadius = 20
+        answer4Button.layer.cornerRadius = 10
         answer4Button.layer.borderWidth = 1
         answer4Button.layer.borderColor = UIColor.black.cgColor
         answersStackView.addArrangedSubview(answer4Button)
@@ -112,6 +107,7 @@ class QuestionView: UIView {
     func checkAnswer(_ sender : UIButton){
         if questionModel?.correct_answer == sender.tag - 1 {
             sender.backgroundColor = .green
+            score += 1
         } else {
             sender.backgroundColor = .red
         }
