@@ -169,7 +169,7 @@ extension QuizListController: TableViewFooterViewDelegate {
         //let vc = LoginViewController()
         //self.navigationController?.pushViewController(vc, animated: true)
         //self.navigationController?.popToRootViewController(animated: true)
-        self.navigationController?.popViewController(animated: true)
+        //self.navigationController?.popViewController(animated: true)
         //}
 
     }

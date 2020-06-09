@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuizScreenViewController: UIViewController {
+class QuizScreenViewController: UIViewController, UIScrollViewDelegate{
     
     var quizTitleLabel : UILabel!
     
@@ -20,10 +20,13 @@ class QuizScreenViewController: UIViewController {
     
     var quiz : QuizModel?
     
+    var pageControl : UIPageControl!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        //quizScrollView.delegate = self
         buildViews()
         createConstrains()
         //getQuiz()
@@ -59,14 +62,22 @@ class QuizScreenViewController: UIViewController {
         startButton.layer.borderWidth = 1.5
         startButton.layer.borderColor = UIColor.black.cgColor
         startButton.backgroundColor = UIColor.magenta
+        startButton.addTarget(self, action: #selector(startButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(startButton)
         
 
         quizScrollView = QuizScrollView()
+        quizScrollView.isHidden = true
         quizScrollView.setUpQuestionView(quizModel: quiz)
         view.addSubview(quizScrollView)
 
     
+    }
+    
+    @objc func startButtonTapped(_ sender : UIButton){
+        quizScrollView.isHidden = false
+        quizScrollView.delegate = self
+        
     }
     
     func createConstrains(){
@@ -82,14 +93,20 @@ class QuizScreenViewController: UIViewController {
         startButton.autoPinEdge(.top, to: .bottom, of: imageQuiz, withOffset: 20)
         startButton.autoAlignAxis(.vertical, toSameAxisOf: imageQuiz)
         
-        quizScrollView.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 20)
+        quizScrollView.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 2)
+        
         quizScrollView.autoAlignAxis(.vertical, toSameAxisOf: startButton)
         quizScrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         quizScrollView.autoMatch(.width, to: .width, of: view)
 
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        pageControl.currentPage = Int(scrollView.contentOffset.x/view.frame.width)
+    }
     
+    
+     
 
 }
     
