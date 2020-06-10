@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     var passwordTextField : UITextField!
     
     var loginButton : UIButton!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +63,7 @@ class LoginViewController: UIViewController {
         loginButton.layer.borderWidth = 1.5
         loginButton.layer.borderColor = UIColor.black.cgColor
         loginButton.backgroundColor = UIColor.magenta
+        loginButton.autoSetDimensions(to: .init(width: 150, height: 40))
         loginButton.addTarget(self, action: #selector(loginButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(loginButton)
 
@@ -103,6 +105,7 @@ class LoginViewController: UIViewController {
             return
         }
         
+
         let myActivityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
         myActivityIndicator.center = view.center
         myActivityIndicator.hidesWhenStopped = false
@@ -142,15 +145,17 @@ class LoginViewController: UIViewController {
                 let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
                 
                 if let parseJSON = json{
-                    
+                    print(parseJSON)
                     guard let accessToken = parseJSON ["token"] as? String else {
                         self.displayMessage(userMessage: "Navedeni username ne postoji. Pokušaj ponovo.")
                         return
                     }
-                    //let userId = parseJSON["id"] as? String
-                
-                    print("Access token: \(String(describing: accessToken))")
                     
+                    guard let userId = parseJSON["user_id"] as? Int else{
+                        self.displayMessage(userMessage: "Navedeni username ne postoji. Pokušaj ponovo.")
+                        return
+                    }
+                
                     if(accessToken.isEmpty)
                     {
                         self.displayMessage(userMessage: "Ne može se izvesti ovaj zahtjev. Pokušaj ponovo.")
@@ -159,7 +164,7 @@ class LoginViewController: UIViewController {
                     DispatchQueue.main.async
                     {
                         UserDefaults.standard.set(accessToken, forKey: "accessToken")
-                        UserDefaults.standard.set(self.usernameTextField.text, forKey: "Id")
+                        UserDefaults.standard.set(userId, forKey: "Id")
                         //UserDefaults.standard.set(accessToken, forKey: "True")
                         UserDefaults.standard.synchronize()
                         let vc = QuizListController()
@@ -173,13 +178,11 @@ class LoginViewController: UIViewController {
                 self.removeActivityIndicator(activityIndicator: myActivityIndicator)
                 self.displayMessage(userMessage: "Ne može se izvesti ovaj zahtjev. Pokušaj ponovo.")
             }
-        
-    
         }
         task.resume()
 
-        
     }
+
 
     func displayMessage(userMessage: String) -> Void{
         DispatchQueue.main.async {

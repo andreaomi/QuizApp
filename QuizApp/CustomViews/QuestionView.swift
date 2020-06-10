@@ -9,7 +9,7 @@
 import UIKit
 
 protocol QuestionViewDelegate: class {
-       func clickedAnswer()
+    func clickedAnswer(answer: Int)
    }
 
 class QuestionView: UIView {
@@ -25,7 +25,7 @@ class QuestionView: UIView {
     
     var questionModel: QuestionModel?
     
-    var score : Int = 0
+    var answer : Int = 0
     
     weak var delegate: QuestionViewDelegate?
     
@@ -107,11 +107,11 @@ class QuestionView: UIView {
     func checkAnswer(_ sender : UIButton){
         if questionModel?.correct_answer == sender.tag - 1 {
             sender.backgroundColor = .green
-            score += 1
+            answer += 1
         } else {
             sender.backgroundColor = .red
         }
-        delegate?.clickedAnswer()
+        delegate?.clickedAnswer(answer: answer)
     }
     
     func makeConstraints(){
