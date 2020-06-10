@@ -177,7 +177,8 @@ extension QuizScreenViewController: QuestionViewDelegate {
             }
         } else{
             let duration = Double(Date().timeIntervalSince(timer))
-            print(duration)
+            print("Vrijeme rješavanja kviza: ",duration)
+            print("Broj tocnih odgovora: ",correctAnswers)
             sendResultsToService(quizId: quiz!.id, userId: UserDefaults.standard.value(forKey: "Id")! as! Int, duration: duration, correctAnswers: correctAnswers)
         }
         

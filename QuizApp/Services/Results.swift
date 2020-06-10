@@ -38,7 +38,7 @@ class ResultService {
                 guard let data = data else { return }
                 guard (try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]) != nil else { return }
                 let httpResponse = response as! HTTPURLResponse
-                print(response!)
+                //print(response!)
                 if httpResponse.statusCode == 200 {
                     completionHandler(0)
                 } else if httpResponse.statusCode == 401 {
