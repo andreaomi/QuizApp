@@ -32,8 +32,22 @@ class QuizScreenViewController: UIViewController{
     
     var timer : Date!
     
+    var resultsButton : UIButton!
+    
     private let resultService = ResultService()
-
+    
+    private let topResultsService = TopResultsServices()
+    
+    var getResults : [Results]?
+    
+    var someDict:[String:String?] = [:]
+    
+    var counter : Int = 0
+    
+    var index : Int = 0
+    
+    var topResults : [Results]? = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -41,12 +55,10 @@ class QuizScreenViewController: UIViewController{
         createConstrains()
     }
     
-       
     func getImage() -> URL?{
         guard let imageURL = quiz?.image else {return nil}
         return URL(string: imageURL)
     }
-       
     
     func buildViews(){
         quizTitleLabel = UILabel()
@@ -81,6 +93,18 @@ class QuizScreenViewController: UIViewController{
         quizScrollView.addSubview(questionsStackView)
         view.addSubview(quizScrollView)
         
+        resultsButton = UIButton()
+        resultsButton.setTitle("RESULTS", for: .normal)
+        resultsButton.setTitleColor(.black, for: .normal)
+        resultsButton.autoSetDimensions(to: .init(width: 150, height: 40))
+        resultsButton.layer.cornerRadius = 5
+        resultsButton.layer.borderWidth = 1.5
+        resultsButton.layer.borderColor = UIColor.black.cgColor
+        resultsButton.backgroundColor = UIColor.white
+        resultsButton.addTarget(self, action: #selector(resultsButtonTapped(_:)), for: .touchUpInside)
+        view.addSubview(resultsButton)
+        
+        
         createQuestionViews()
     }
     
@@ -96,7 +120,7 @@ class QuizScreenViewController: UIViewController{
             questionViews[i].autoMatch(.width, to: .width, of: view)
         }
     }
-
+    
     
     func createConstrains(){
         quizTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 80)
@@ -109,23 +133,54 @@ class QuizScreenViewController: UIViewController{
         startButton.autoPinEdge(.top, to: .bottom, of: imageQuiz, withOffset: 20)
         startButton.autoAlignAxis(.vertical, toSameAxisOf: imageQuiz)
         
+        resultsButton.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 20)
+        resultsButton.autoAlignAxis(.vertical, toSameAxisOf: imageQuiz)
+        
         questionsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: 0)
         questionsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
         questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
         
-        quizScrollView.autoPinEdge(.top, to: .bottom, of: startButton, withOffset: 40)
-        quizScrollView.autoAlignAxis(.vertical, toSameAxisOf: startButton)
+        quizScrollView.autoPinEdge(.top, to: .bottom, of: resultsButton, withOffset: 40)
+        quizScrollView.autoAlignAxis(.vertical, toSameAxisOf: resultsButton)
         quizScrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         quizScrollView.autoMatch(.width, to: .width, of: view)
-
+        
     }
     
     
     @objc func startButtonTapped(_ sender : UIButton){
         quizScrollView.isHidden = false
         timer = Date()
-       }
+    }
+    
+    @objc func resultsButtonTapped(_ sender : UIButton){
+        print("Tapped")
+        topResultsService.getTopResults(quiz!.id){ [weak self] (results) in
+            guard let getResults = results else {return}
+            //            self?.getResults = getResults
+            
+            while self!.counter < 20{
+                if(getResults[self!.index].score != nil){
+                    self?.counter += 1
+                    //print(getResults[self!.index])
+                    self!.topResults?.append(getResults[self!.index])
+                }
+                self?.index+=1
+            }
+            
+            guard let results = self!.topResults else { return }
+            DispatchQueue.main.async {
+                let vc = LeaderboardController()
+                vc.topResults = results
+                self!.present(vc, animated: true, completion: nil)
+            }
+        }
+        
+        
+    }
+    
+    
     
     func scrollToAnotherQuestion() {
         let move = view.frame.size.width * CGFloat(questionsAnswered)
@@ -137,30 +192,32 @@ class QuizScreenViewController: UIViewController{
             self.backToQuizList(check: check)
         }
     }
-       
-     func backToQuizList(check: Int?) {
-          DispatchQueue.main.async {
-           if (check == 0) {
-               print("200 OK")
-               self.navigationController?.popViewController(animated: true)
-           } else if (check == 1){
-               print("401 UNATHORIZED")
-               self.navigationController?.popViewController(animated: true)
-           }
-           else if (check == 2){
-               print("403 FORBIDDEN")
-               self.navigationController?.popViewController(animated: true)
-           }
-           else if (check == 3){
-               print("404 NOT FOUND")
-               self.navigationController?.popViewController(animated: true)
-           }
-           else if (check == 4){
-               print("400 BAD REQUEST")
-               self.navigationController?.popViewController(animated: true)
-           }
-           }
-       }
+    
+    func backToQuizList(check: Int?) {
+        DispatchQueue.main.async {
+            if (check == 0) {
+                print("200 OK")
+                self.navigationController?.popViewController(animated: true)
+                
+                
+            } else if (check == 1){
+                print("401 UNATHORIZED")
+                self.navigationController?.popViewController(animated: true)
+            }
+            else if (check == 2){
+                print("403 FORBIDDEN")
+                self.navigationController?.popViewController(animated: true)
+            }
+            else if (check == 3){
+                print("404 NOT FOUND")
+                self.navigationController?.popViewController(animated: true)
+            }
+            else if (check == 4){
+                print("400 BAD REQUEST")
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
 }
 
 extension QuizScreenViewController: QuestionViewDelegate {
@@ -186,5 +243,5 @@ extension QuizScreenViewController: QuestionViewDelegate {
     
     
 }
-    
-    
+
+

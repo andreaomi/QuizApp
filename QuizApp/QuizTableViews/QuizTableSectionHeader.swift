@@ -30,11 +30,11 @@ class QuizTableSectionHeader : UIView {
     func checkCategory(category: Category) {
         switch category{
         case .SPORTS :
-                titleLabel.backgroundColor = .blue
-                backgroundColor = UIColor.blue
+            titleLabel.backgroundColor = .blue
+            backgroundColor = UIColor.blue
         case .SCIENCE:
-                titleLabel.backgroundColor = .green
-                backgroundColor = UIColor.green
+            titleLabel.backgroundColor = .green
+            backgroundColor = UIColor.green
         }
     }
     

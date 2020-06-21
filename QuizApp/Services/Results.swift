@@ -21,7 +21,7 @@ class ResultService {
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonDict, options: [])
         let token = UserDefaults.standard.value(forKey: "accessToken")!
         //print(token)
-        
+         
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("\(token)", forHTTPHeaderField: "Authorization")

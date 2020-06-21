@@ -20,12 +20,16 @@ class QuizListController: UIViewController {
     
     var tableFooterView: QuizTableFooter!
     
+    
     struct Cells{
         static let quizCell = "QuizTableViewCell"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        //navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationItem.title = "Lista kvizova"
         setUpData()
         configureTableView()
     }
@@ -70,7 +74,7 @@ class QuizListController: UIViewController {
     @objc func refresh() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
-            //self.refreshControl.endRefreshing()
+            self.refreshControl.endRefreshing()
         }
     }
 
@@ -105,6 +109,7 @@ class QuizListController: UIViewController {
                 return []
         }
         let quizzes = [sportQuiz, scieneceQuiz]
+        //print(quizzes)
         return quizzes
     }
     
@@ -146,6 +151,9 @@ extension QuizListController: UITableViewDelegate, UITableViewDataSource{
         let quiz = getQuiz()[indexPath.section][indexPath.row]
         
         let quizScreenViewController = QuizScreenViewController()
+        quizScreenViewController.hidesBottomBarWhenPushed = true
+        
+        
         quizScreenViewController.quiz = quiz
 
         navigationController?.pushViewController(quizScreenViewController, animated: true)

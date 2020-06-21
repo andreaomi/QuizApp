@@ -121,7 +121,6 @@ class LoginViewController: UIViewController {
         let postString = ["username": username!,
                           "password": password!,
                         ] as [String: String]
-        
         do{
             request.httpBody = try JSONSerialization.data(withJSONObject: postString, options: .prettyPrinted)
         } catch let error {
@@ -145,7 +144,7 @@ class LoginViewController: UIViewController {
                 let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
                 
                 if let parseJSON = json{
-                    print(parseJSON)
+                    //print(parseJSON)
                     guard let accessToken = parseJSON ["token"] as? String else {
                         self.displayMessage(userMessage: "Navedeni username ne postoji. Pokušaj ponovo.")
                         return
@@ -164,11 +163,15 @@ class LoginViewController: UIViewController {
                     DispatchQueue.main.async
                     {
                         UserDefaults.standard.set(accessToken, forKey: "accessToken")
+                        
                         UserDefaults.standard.set(userId, forKey: "Id")
+                        UserDefaults.standard.set(username, forKey: "username")
                         //UserDefaults.standard.set(accessToken, forKey: "True")
                         UserDefaults.standard.synchronize()
-                        let vc = QuizListController()
+                        //let vc = QuizListController()
+                        let vc = TabBarController()
                         self.navigationController?.pushViewController(vc, animated: true)
+                        vc.hidesBottomBarWhenPushed = false
                     }
                     
                 }else{
