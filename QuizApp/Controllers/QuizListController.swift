@@ -74,7 +74,7 @@ class QuizListController: UIViewController {
     @objc func refresh() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
-            self.refreshControl.endRefreshing()
+            //self.refreshControl.endRefreshing()
         }
     }
 
