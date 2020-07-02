@@ -148,7 +148,6 @@ class QuizScreenViewController: UIViewController{
         
     }
     
-    
     @objc func startButtonTapped(_ sender : UIButton){
         quizScrollView.isHidden = false
         timer = Date()
@@ -176,10 +175,7 @@ class QuizScreenViewController: UIViewController{
                 self!.present(vc, animated: true, completion: nil)
             }
         }
-        
-        
     }
-    
     
     
     func scrollToAnotherQuestion() {
@@ -188,36 +184,36 @@ class QuizScreenViewController: UIViewController{
     }
     
     func sendResultsToService(quizId: Int, userId: Int, duration: Double, correctAnswers: Int ) {
-        resultService.sendResults(quizId,userId,duration,correctAnswers) { check in
-            self.backToQuizList(check: check)
+        resultService.sendResults(quizId,userId,duration,correctAnswers) { responseCode in
+            self.backToQuizList(responseCode: responseCode)
         }
     }
     
-    func backToQuizList(check: Int?) {
-        DispatchQueue.main.async {
-            if (check == 0) {
-                print("200 OK")
-                self.navigationController?.popViewController(animated: true)
-                
-                
-            } else if (check == 1){
-                print("401 UNATHORIZED")
+    
+    func backToQuizList(responseCode: ResponseCodes?) {
+        if responseCode == ResponseCodes.ok {
+            DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
             }
-            else if (check == 2){
-                print("403 FORBIDDEN")
-                self.navigationController?.popViewController(animated: true)
+            } else {
+                DispatchQueue.main.async {
+                   self.showAlert(responseCode: responseCode)
+                }
             }
-            else if (check == 3){
-                print("404 NOT FOUND")
-                self.navigationController?.popViewController(animated: true)
-            }
-            else if (check == 4){
-                print("400 BAD REQUEST")
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
     }
+    
+    func showAlert(responseCode: ResponseCodes?) {
+        let defaultErrorMessage = "There wasn't any response!"
+        
+        let alert = UIAlertController(title: "Send again?", message: "Error was: \(responseCode?.message ?? defaultErrorMessage)", preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { _ in
+            self.navigationController?.popViewController( animated: true)
+        }))
+       
+        self.present(alert, animated: true, completion: nil)
+    }
+
 }
 
 extension QuizScreenViewController: QuestionViewDelegate {

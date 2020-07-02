@@ -13,7 +13,7 @@ class ResultService {
     private let apiString = "https://iosquiz.herokuapp.com/api/result"
     private let session = URLSession.shared
     
-    func sendResults(_ quizId: Int, _ userId: Int, _ time: Double, _ correctAnswers: Int, completionHandler: @escaping (Int?) -> Void) {
+    func sendResults(_ quizId: Int, _ userId: Int, _ time: Double, _ correctAnswers: Int, completionHandler: @escaping (ResponseCodes?) -> Void) {
         guard let url = URL(string: apiString) else { return }
         let request = NSMutableURLRequest(url: url)
         
@@ -38,18 +38,9 @@ class ResultService {
                 guard let data = data else { return }
                 guard (try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]) != nil else { return }
                 let httpResponse = response as! HTTPURLResponse
-                //print(response!)
-                if httpResponse.statusCode == 200 {
-                    completionHandler(0)
-                } else if httpResponse.statusCode == 401 {
-                    completionHandler(1)
-                } else if httpResponse.statusCode == 403{
-                    completionHandler(2)
-                } else if httpResponse.statusCode == 404 {
-                    completionHandler(3)
-                } else if httpResponse.statusCode == 400{
-                    completionHandler(4)
-                }
+                let responseCode = ResponseCodes.init(rawValue: httpResponse.statusCode)
+                completionHandler(responseCode)
+               
             } catch {
                 print("POGREŠKA:", error)
                 

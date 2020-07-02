@@ -43,6 +43,7 @@ class SearchScreenController: UIViewController {
         searchButton.layer.cornerRadius = 10
         searchButton.layer.borderWidth = 1
         searchButton.layer.borderColor = UIColor.black.cgColor
+        searchButton.backgroundColor = UIColor.green
         view.addSubview(searchButton)
         
     }

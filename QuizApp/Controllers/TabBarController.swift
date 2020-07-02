@@ -14,6 +14,8 @@ class TabBarController: UITabBarController {
     var viewConotroller2 : SearchScreenController?
     var viewConotroller3 : SettingsScreenController?
     var subviewControllers : [UIViewController] = []
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,5 +54,7 @@ class TabBarController: UITabBarController {
             print("no tab")
         }
     }
+    
+    
 
 }

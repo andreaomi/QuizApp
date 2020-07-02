@@ -51,6 +51,7 @@ class SettingsScreenController: UIViewController {
         logoutButton.layer.borderColor = UIColor.black.cgColor
         logoutButton.addTarget(self, action: #selector(logoutButtonTapped(_:)), for: .touchUpInside)
         logoutButton.autoSetDimensions(to: .init(width: 150, height: 40))
+        logoutButton.backgroundColor = UIColor.blue
         view.addSubview(logoutButton)
         
     }

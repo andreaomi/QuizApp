@@ -11,6 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
     
     //var loginLabel : UILabel!
+    var quizImage : UIImageView!
     
     var usernameTextField : UITextField!
     
@@ -43,6 +44,9 @@ class LoginViewController: UIViewController {
         //funFactLabel.font = UIFont.systemFont(ofSize: 15)
         //view.addSubview(loginLabel)
         
+        quizImage = UIImageView()
+        quizImage.image = #imageLiteral(resourceName: "quiz")
+        view.addSubview(quizImage)
         usernameTextField = UITextField()
         usernameTextField.placeholder = "username"
         usernameTextField.layer.borderColor = UIColor.black.cgColor
@@ -62,7 +66,7 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 5
         loginButton.layer.borderWidth = 1.5
         loginButton.layer.borderColor = UIColor.black.cgColor
-        loginButton.backgroundColor = UIColor.magenta
+        loginButton.backgroundColor = UIColor.red
         loginButton.autoSetDimensions(to: .init(width: 150, height: 40))
         loginButton.addTarget(self, action: #selector(loginButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(loginButton)
@@ -71,11 +75,14 @@ class LoginViewController: UIViewController {
     }
     func createConstrains(){
         
-        //loginLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 150)
-        //loginLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
-        //loginLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 50)
+        quizImage.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
+        quizImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
+        quizImage.autoPinEdge(toSuperviewEdge: .trailing, withInset: 50)
+        quizImage
+            .autoSetDimensions(to: CGSize(width:200, height: 150))
         
-        usernameTextField.autoPinEdge(toSuperviewEdge: .top, withInset: 200)
+        usernameTextField.autoPinEdge(.top, to: .bottom, of: quizImage, withOffset: 20)
+        //usernameTextField.autoAlignAxis(<#T##axis: ALAxis##ALAxis#>, toSameAxisOf: <#T##UIView#>)
         usernameTextField.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
         usernameTextField.autoPinEdge(toSuperviewEdge: .trailing, withInset: 50)
         
@@ -103,6 +110,8 @@ class LoginViewController: UIViewController {
             displayMessage(userMessage: "Sva polja moraju biti popunjena.")
             return
         }
+        
+        self.animateEverythingOut()
         
 
         let myActivityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
@@ -218,19 +227,18 @@ class LoginViewController: UIViewController {
            return true
        }
     
-    func animateEverythingIn(){
+    func animateEverythingIn() {
+        
         navigationController?.isNavigationBarHidden  = true
         
         
-        guard usernameTextField.text == "" else {return}
-        guard passwordTextField.text == "" else {return}
+        usernameTextField.text = ""
+        passwordTextField.text = ""
         usernameTextField.becomeFirstResponder()
         
-
-        
         UIView.animate(withDuration: 0, animations: {
-            //self.loginLabel.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-            //self.loginNameLabel.alpha = 0
+            self.quizImage.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            self.quizImage.alpha = 0
             self.usernameTextField.transform = CGAffineTransform(translationX: -self.view.bounds.size.width, y: 0)
             self.usernameTextField.alpha = 0
             self.passwordTextField.transform = CGAffineTransform(translationX: -self.view.bounds.size.width, y: 0)
@@ -241,6 +249,12 @@ class LoginViewController: UIViewController {
         }) { _ in
         }
         
+        
+        UIView.animate(withDuration: 2.1, animations: {
+            self.quizImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.quizImage.alpha = 1
+        }) { _ in
+        }
         UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseInOut, animations: {
             self.usernameTextField.transform = CGAffineTransform.identity
             self.usernameTextField.alpha = 1
@@ -256,34 +270,34 @@ class LoginViewController: UIViewController {
             self.loginButton.alpha = 1
         }) { _ in
         }
-        
     }
        
     
-    func animateEveryThingOut(){
-       /* UIView.animate(withDuration: 0.3, animations: {
-            self.loginLabel.transform = CGAffineTransform(translationX: 0, y: -200)
-            self.loginLabel.alpha = 0.0
-        }) { _ in
-        }*/
-        
-        UIView.animate(withDuration: 0.3, delay: 0.15 , animations: {
-            self.usernameTextField.transform = CGAffineTransform(translationX: 0, y: -200)
-            self.usernameTextField.alpha = 0.0
-        }) { _ in
+    
+    func animateEverythingOut() {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            self.quizImage.transform = self.quizImage.transform.translatedBy(x: 0, y: -500)
+         }) { _ in
         }
         
-        UIView.animate(withDuration: 0.3, delay: 0.30, animations: {
-            self.passwordTextField.transform = CGAffineTransform(translationX: 0, y: -200)
-            self.passwordTextField.alpha = 0.0
-        }) { _ in
+        UIView.animate(withDuration: 1.2, delay: 0.3, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            self.usernameTextField.transform = self.usernameTextField.transform.translatedBy(x: 0, y: -600)
+            
+            self.usernameTextField.transform = self.usernameTextField.transform.translatedBy(x: 0, y: -600)
+         }) { _ in
         }
         
-        UIView.animate(withDuration: 0.3, delay: 0.45, animations: {
-            self.loginButton.transform = CGAffineTransform(translationX: 0, y: -200)
-            self.loginButton.alpha = 0.0
-        }) { _ in
+        UIView.animate(withDuration: 1.2, delay: 0.6, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            self.passwordTextField.transform = self.passwordTextField.transform.translatedBy(x: 0, y: -700)
+            
+            self.passwordTextField.transform = self.passwordTextField.transform.translatedBy(x: 0, y: -700)
+         }) { _ in
         }
         
+        UIView.animate(withDuration: 1.2, delay: 0.9, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            
+            self.loginButton.transform = self.loginButton.transform.translatedBy(x: 0, y: -800)
+         }) { _ in
+        }
     }
 }
