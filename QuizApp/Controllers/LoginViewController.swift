@@ -229,8 +229,8 @@ class LoginViewController: UIViewController {
 
         
         UIView.animate(withDuration: 0, animations: {
-            //self.quizNameLabel.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-            //self.quizNameLabel.alpha = 0
+            //self.loginLabel.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            //self.loginNameLabel.alpha = 0
             self.usernameTextField.transform = CGAffineTransform(translationX: -self.view.bounds.size.width, y: 0)
             self.usernameTextField.alpha = 0
             self.passwordTextField.transform = CGAffineTransform(translationX: -self.view.bounds.size.width, y: 0)
@@ -262,8 +262,8 @@ class LoginViewController: UIViewController {
     
     func animateEveryThingOut(){
        /* UIView.animate(withDuration: 0.3, animations: {
-            self.quizNameLabel.transform = CGAffineTransform(translationX: 0, y: -200)
-            self.quizNameLabel.alpha = 0.0
+            self.loginLabel.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.loginLabel.alpha = 0.0
         }) { _ in
         }*/
         
