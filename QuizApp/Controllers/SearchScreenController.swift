@@ -21,6 +21,14 @@ class SearchScreenController: UIViewController {
         createConstrains()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden  = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+    }
+    
     func buildViews(){
         searchTextField = UITextField()
         searchTextField.placeholder = "search"

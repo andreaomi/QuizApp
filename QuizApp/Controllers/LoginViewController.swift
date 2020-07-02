@@ -18,18 +18,18 @@ class LoginViewController: UIViewController {
     
     var loginButton : UIButton!
     
+    var textFields: [UITextField] {
+        return [usernameTextField, passwordTextField]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         buildViews()
         createConstrains()
+        animateEverythingIn()
         view.backgroundColor = .white
-        // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden  = true
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
@@ -69,7 +69,6 @@ class LoginViewController: UIViewController {
 
         
     }
-    
     func createConstrains(){
         
         //loginLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 150)
@@ -206,6 +205,84 @@ class LoginViewController: UIViewController {
         DispatchQueue.main.async {
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()
+        }
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+           if let selectedTextFieldIndex = textFields.firstIndex(of: textField), selectedTextFieldIndex < textFields.count - 1 {
+               textFields[selectedTextFieldIndex + 1].becomeFirstResponder()
+           } else {
+               textField.resignFirstResponder()
+           }
+           return true
+       }
+    
+    func animateEverythingIn(){
+        navigationController?.isNavigationBarHidden  = true
+        
+        
+        guard usernameTextField.text == "" else {return}
+        guard passwordTextField.text == "" else {return}
+        usernameTextField.becomeFirstResponder()
+        
+
+        
+        UIView.animate(withDuration: 0, animations: {
+            //self.quizNameLabel.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            //self.quizNameLabel.alpha = 0
+            self.usernameTextField.transform = CGAffineTransform(translationX: -self.view.bounds.size.width, y: 0)
+            self.usernameTextField.alpha = 0
+            self.passwordTextField.transform = CGAffineTransform(translationX: -self.view.bounds.size.width, y: 0)
+            self.passwordTextField.alpha = 0
+            self.loginButton.transform = CGAffineTransform(translationX: -self.view.bounds.size.width, y: 0)
+            self.loginButton.alpha = 0
+            
+        }) { _ in
+        }
+        
+        UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseInOut, animations: {
+            self.usernameTextField.transform = CGAffineTransform.identity
+            self.usernameTextField.alpha = 1
+        }) { _ in
+        }
+        UIView.animate(withDuration: 1.5, delay: 0.35, options: .curveEaseInOut, animations: {
+            self.passwordTextField.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.passwordTextField.alpha = 1
+        }) { _ in
+        }
+        UIView.animate(withDuration: 1.5, delay: 0.60, options: .curveEaseInOut, animations: {
+            self.loginButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.loginButton.alpha = 1
+        }) { _ in
+        }
+        
+    }
+       
+    
+    func animateEveryThingOut(){
+       /* UIView.animate(withDuration: 0.3, animations: {
+            self.quizNameLabel.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.quizNameLabel.alpha = 0.0
+        }) { _ in
+        }*/
+        
+        UIView.animate(withDuration: 0.3, delay: 0.15 , animations: {
+            self.usernameTextField.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.usernameTextField.alpha = 0.0
+        }) { _ in
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0.30, animations: {
+            self.passwordTextField.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.passwordTextField.alpha = 0.0
+        }) { _ in
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0.45, animations: {
+            self.loginButton.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.loginButton.alpha = 0.0
+        }) { _ in
         }
         
     }

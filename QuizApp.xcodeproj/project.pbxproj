@@ -21,6 +21,8 @@
 		65855B39246764D90042590C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65855B38246764D90042590C /* Network.swift */; };
 		659D8552249FA9D900EC909C /* SettingsScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D8551249FA9D900EC909C /* SettingsScreenController.swift */; };
 		659D8554249FCF8800EC909C /* SearchScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D8553249FCF8800EC909C /* SearchScreenController.swift */; };
+		659D855C24A0118D00EC909C /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D855B24A0118D00EC909C /* DataController.swift */; };
+		659D855F24ADE5F700EC909C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 659D855D24ADE5F700EC909C /* Model.xcdatamodeld */; };
 		65A69E2224890DED004A6191 /* QuizTableSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69E2124890DED004A6191 /* QuizTableSectionHeader.swift */; };
 		65A69E242489139A004A6191 /* QuizTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69E232489139A004A6191 /* QuizTableViewCell.swift */; };
 		65A69E2724897F10004A6191 /* QuizTableFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69E2624897F10004A6191 /* QuizTableFooter.swift */; };
@@ -52,6 +54,8 @@
 		65855B38246764D90042590C /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		659D8551249FA9D900EC909C /* SettingsScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenController.swift; sourceTree = "<group>"; };
 		659D8553249FCF8800EC909C /* SearchScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenController.swift; sourceTree = "<group>"; };
+		659D855B24A0118D00EC909C /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		659D855E24ADE5F700EC909C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		65A69E2124890DED004A6191 /* QuizTableSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableSectionHeader.swift; sourceTree = "<group>"; };
 		65A69E232489139A004A6191 /* QuizTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableViewCell.swift; sourceTree = "<group>"; };
 		65A69E2624897F10004A6191 /* QuizTableFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableFooter.swift; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				65855B2F2467477D0042590C /* Info.plist */,
 				65EA3955249F75CC00FD9CB0 /* ResultsCellTableViewCell.swift */,
 				65EA3957249F80A200FD9CB0 /* ResultTableHeader.swift */,
+				659D855B24A0118D00EC909C /* DataController.swift */,
+				659D855D24ADE5F700EC909C /* Model.xcdatamodeld */,
 			);
 			path = QuizApp;
 			sourceTree = "<group>";
@@ -297,10 +303,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				65EA3952249E922E00FD9CB0 /* TopResults.swift in Sources */,
+				659D855F24ADE5F700EC909C /* Model.xcdatamodeld in Sources */,
 				655714B4248571BC007AC8A0 /* QuizListController.swift in Sources */,
 				65855B39246764D90042590C /* Network.swift in Sources */,
 				65D9E8BC248D241A00C6D614 /* QuizScreenViewController.swift in Sources */,
 				65EA3950249CD70C00FD9CB0 /* TabBarController.swift in Sources */,
+				659D855C24A0118D00EC909C /* DataController.swift in Sources */,
 				65855B3724675E990042590C /* QuestionView.swift in Sources */,
 				65855B26246747790042590C /* ViewController.swift in Sources */,
 				659D8554249FCF8800EC909C /* SearchScreenController.swift in Sources */,
@@ -506,6 +514,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		659D855D24ADE5F700EC909C /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				659D855E24ADE5F700EC909C /* Model.xcdatamodel */,
+			);
+			currentVersion = 659D855E24ADE5F700EC909C /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 65855B16246747790042590C /* Project object */;
 }
